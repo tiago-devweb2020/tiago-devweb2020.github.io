@@ -13,6 +13,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Orbitron:wght@600&display=swap" rel="stylesheet"> 
 
+<link rel="stylesheet" href="plugins/slick/slick.css">
+<link rel="stylesheet" href="plugins/slick/slick-theme.css">
+
 <link rel="stylesheet" href="css/style.css">
 
 </head>
@@ -41,10 +44,22 @@
     <!-- CONTEÚDO PRINCIPAL/GERAL -->
     <main class="container">
         <!-- DESTAQUE -->
-        <article>
-            <img src="imagens/mesa-de-trabalho.jpg" alt="">
-            <h2>Ambiente organizado</h2>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi repellat fugiat optio esse nostrum quae facilis dolor eius accusantium natus?</p>
+        <article class="slider">
+            <div>
+                <img src="imagens/mesa-de-trabalho.jpg" alt="">
+                <h2>Ambiente organizado</h2>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi repellat fugiat optio esse nostrum quae facilis dolor eius accusantium natus?</p>
+            </div>
+            <div>
+                <img src="imagens/bootstrap.jpg" alt="">
+                <h2>Bootstrap</h2>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi repellat fugiat optio esse nostrum quae facilis dolor eius accusantium natus?</p>
+            </div>
+            <div>
+                <img src="imagens/tela-com-codigos.jpg" alt="">
+                <h2>Tela</h2>
+                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi repellat fugiat optio esse nostrum quae facilis dolor eius accusantium natus?</p>
+            </div>
         </article>
         <!-- FIM DESTAQUE -->
 
@@ -152,7 +167,12 @@
 
     <p>
         <label for="mensagem">Mensagem:</label>
-        <textarea name="mensagem" id="mensagem" cols="40" rows="6"></textarea>
+        
+        <span id="maximo">
+            restam <b id="caracteres">300</b> caracteres
+        </span>
+
+        <textarea maxlength="300" name="mensagem" id="mensagem" cols="40" rows="6"></textarea>
     </p>
     <button type="submit">Enviar</button>
 </form>
@@ -197,5 +217,54 @@
     </footer>
     <!-- FIM RODAPÉ -->
 
+<script src="js/jquery-3.5.1.min.js"></script>
+<script src="plugins/slick/slick.min.js"></script>
+<script src="plugins/jquery.mask.min.js"></script>
+<script>
+"use strict";
+
+// slider
+$('.slider').slick({
+    autoplay: true,
+    autoplaySpeed: 4000,
+    dots: true,
+    arrows: false
+});
+
+// mask
+$('#telefone').mask("(00) 0000-0000");
+
+// contador
+var spanMaximo = $("#maximo");
+var bCaracteres = $("#caracteres");
+var textMensagem = $("#mensagem");
+
+// Determinando a qtd de caracteres
+var quantidade = 300;
+
+// Evento para detectar entrada (digitação) no campo
+textMensagem.on("input", function(){
+    // Captura em tempo real
+    //console.log(textMensagem.val());
+    var conteudo = textMensagem.val();
+
+    // Criando uma contagem regressiva
+    var contagem = quantidade - conteudo.length;
+
+    console.log(contagem);
+
+    // Exibindo a contagem no HTML
+    bCaracteres.text(contagem);
+
+    /* Se a contagem chegar no zero,
+    exibir o span em vermelho. Caso contrário,
+    exibir em preto. */
+    if(contagem == 0){
+        spanMaximo.css("color", "red");
+    } else {
+        spanMaximo.css("color", "black");
+    }
+});
+</script>
 </body>
 </html>
